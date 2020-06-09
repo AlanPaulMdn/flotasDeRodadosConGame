@@ -1,7 +1,40 @@
 import wollok.game.*
+import otrosRodados.*
+import colores.*
+import objetosEnElJuego.*
 
 program corsasEnElGame {
-	// hacer las inicializaciones necesarias 
+	game.title("Corsa salvaje")
 	
+	game.height(15)
+	game.width(15)
+	game.ground("road.png")
+	
+	const corsa1 = new Corsa( color= rojo )
+	const corsa2 = new Corsa( color= azul )
+	const corsa3 = new Corsa( color= verde)
+	
+	var autoEnUso = corsa1
+	
+	game.addVisual(corsa1)
+	game.addVisual(corsa2)
+	game.addVisual(corsa3)
+	
+	keyboard.num1().onPressDo({ autoEnUso= corsa1 })
+	keyboard.num2().onPressDo({ autoEnUso= corsa2 })
+	keyboard.num3().onPressDo({ autoEnUso= corsa3 })
+	
+	keyboard.up().onPressDo ({autoEnUso.moveUp()})	
+	keyboard.down().onPressDo ({autoEnUso.moveDown()})	
+	keyboard.left().onPressDo ({autoEnUso.moveLeft()})	
+	keyboard.right().onPressDo ({autoEnUso.moveRight()})
+	
+	keyboard.r().onPressDo({ autoEnUso.color(rojo) })
+	keyboard.a().onPressDo({ autoEnUso.color(azul)  })
+	keyboard.v().onPressDo({ autoEnUso.color(verde)  })
+	
+	
+	
+	//keyboard.m().onPressDo({ game.say(corsa, corsa.posiciones() ) })
 	game.start()
 }

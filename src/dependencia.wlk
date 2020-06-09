@@ -5,13 +5,10 @@ import colores.*
 class Dependencia {
 	const flota= []
 	var property cantEmpleades
+	const property pedidos= []
 	
-	method agregarAFlota(rodado){
-		flota.add(rodado)
-	}
-	method quitarDeFlota(rodado){
-		flota.remove(rodado)
-	}
+	method agregarAFlota(rodado){ flota.add(rodado) }
+	method quitarDeFlota(rodado){ flota.remove(rodado) }
 	method pesoTotalFlota()= flota.sum({auto => auto.peso() })
 	method estaBienEquipada()= flota.size()>=3 and flota.all({auto => auto.velocidadMax()>=100 })
 	method capacidadTotalEnColor(color)=
@@ -19,4 +16,14 @@ class Dependencia {
 	method colorDelRodadoMasRapido()= flota.max({auto => auto.velocidadMax()}).color()
 	method capacidadFaltante()= cantEmpleades - flota.sum({auto => auto.capacidad()}).max(0)
 	method esGrande()= cantEmpleades>=40 and flota.size()>=5
+	
+	method addPedido(pedido){ pedidos.add(pedido)}
+	method removePedido(pedido){ pedidos.remove(pedido)}
+	method totalPasajerosPedidos()= pedidos.sum({pedido => pedido.cantPasajeros() })
+	method pedidosInsatisfechos()=
+		pedidos.filter({pedido => not pedido.puedeSatisfacerloUnoDe(flota)})
+	method incompatibleConTodos(color)=
+		pedidos.all({ pedido => pedido.esColorIncompatible(color)})
+	method relajarPedidos() {	pedidos.apply({pedido => pedido.relajar()})	}
+	
 }

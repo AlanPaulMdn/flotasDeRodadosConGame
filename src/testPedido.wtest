@@ -1,0 +1,24 @@
+import otrosRodados.*
+import colores.*
+import trafic.*
+import dependencia.*
+import pedidos.*
+
+test "PEDIDO" {
+	const cachito= new Corsa(color= rojo)
+	const pedidos1 = new Pedido(distancia=960, tiempoMax=8 ,
+		cantPasajeros=4 , coloresIncompa= #{azul,negro})
+	assert.that(pedidos1.puedeSatisfacerPedido(cachito))
+	
+	pedidos1.addColor(rojo)
+	assert.notThat(pedidos1.puedeSatisfacerPedido(cachito))
+	
+	pedidos1.removeColor(rojo)
+	pedidos1.cantPasajeros(6)
+	assert.notThat(pedidos1.puedeSatisfacerPedido(cachito))
+	
+	pedidos1.cantPasajeros(4)
+	pedidos1.tiempoMax(6)
+	assert.notThat(pedidos1.puedeSatisfacerPedido(cachito))
+	
+}
